@@ -66,7 +66,8 @@ class CommentController extends Controller implements CommentControllerInterface
         $comment->approved = !config('comments.approval_required');
         $comment->save();
 
-        return redirect()->to(url()->previous() . '#comment-' . $comment->id);
+        return response($comment);
+        //return redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
 
     /**
@@ -84,7 +85,8 @@ class CommentController extends Controller implements CommentControllerInterface
             'comment' => $request->message
         ]);
 
-        return redirect()->to(url()->previous() . '#comment-' . $comment->id);
+        // return redirect()->to(url()->previous() . '#comment-' . $comment->id);
+        return response($comment);
     }
 
     /**
@@ -93,10 +95,11 @@ class CommentController extends Controller implements CommentControllerInterface
     public function destroy(Comment $comment)
     {
         $this->authorize('delete-comment', $comment);
-
+        
         $comment->delete();
 
-        return redirect()->back();
+        // return redirect()->back();
+        return response($comment);
     }
 
     /**
@@ -119,6 +122,8 @@ class CommentController extends Controller implements CommentControllerInterface
         $reply->approved = !config('comments.approval_required');
         $reply->save();
 
-        return redirect()->to(url()->previous() . '#comment-' . $reply->id);
+        return response($reply);
+
+        // return redirect()->to(url()->previous() . '#comment-' . $reply->id);
     }
 }
